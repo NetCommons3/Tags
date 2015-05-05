@@ -1,6 +1,15 @@
 <div class="form-group"
-	 ng-controller="Blogs.BlogTagEdit"
-	 ng-init="init(<?php echo $frameId; ?>, <?php echo h(json_encode($tagData)); ?> )">
+	 ng-controller="Tags.TagEdit"
+	 ng-init="init(
+	 <?php
+	 printf("%d, '%s', %s",
+		 $frameId,
+		 $modelName,
+		 h(json_encode($tagData))
+	 );
+	 ?>
+	 )">
+
 	<label class="control-label">
 		<?php echo __d('blogs', 'tag'); ?>
 	</label>
@@ -31,7 +40,7 @@
 				<span class="glyphicon glyphicon-remove small"><span class="sr-only">Remove tags</span> </span>
 			</span>
 			&nbsp;
-			<input type="hidden" name="data[BlogTag][{{$index}}][name]" value="{{tag.name}}"/>
+			<input type="hidden" name="data[Tag][{{$index}}][name]" value="{{tag.name}}"/>
 		</span>
 	</div>
 </div>

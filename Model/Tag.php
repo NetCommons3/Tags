@@ -18,6 +18,8 @@ App::uses('TagsAppModel', 'Tags.Model');
  */
 class Tag extends TagsAppModel {
 
+
+	public $recursive = -1;
 /**
  * Validation rules
  *
@@ -81,13 +83,13 @@ class Tag extends TagsAppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'Origin' => array(
-			'className' => 'Origin',
-			'foreignKey' => 'origin_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
+		//'Origin' => array(
+		//	'className' => 'Origin',
+		//	'foreignKey' => 'origin_id',
+		//	'conditions' => '',
+		//	'fields' => '',
+		//	'order' => ''
+		//),
 		'Language' => array(
 			'className' => 'Language',
 			'foreignKey' => 'language_id',

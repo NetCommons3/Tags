@@ -1,22 +1,23 @@
 /**
  * Created by ryuji on 15/04/30.
  */
-NetCommonsApp.controller('Blogs.BlogTagEdit',
-  function ($scope, $filter, $http, $document) {
+NetCommonsApp.controller('Tags.TagEdit',
+  function ($scope, $filter, $http) {
     var where = $filter('filter');
 
     $scope.frameId = 0;
-
+    $scope.modelName = '';
     $scope.tags = [];
-    $scope.newTag = '';
 
-    $scope.init = function(frameId, tags){
+
+    $scope.init = function(frameId, modelName, tags){
+      console.log(modelName);
       $scope.tags = (tags) ? tags : [];
+      $scope.modelName = modelName;
       $scope.frameId = frameId;
-
-
     }
 
+    $scope.newTag = '';
 
     $scope.addTag = function () {
       if($scope.newTag.length > 0){
@@ -32,14 +33,14 @@ NetCommonsApp.controller('Blogs.BlogTagEdit',
     $scope.showResult = false;
     $scope.showResultStyle = {};
     $scope.tagSearchResult = [];
-    $scope.searchUrl = '/blogs/blog_tags/search/';
+    $scope.searchUrl = '/tags/tags/search/';
     // タグ補完
     $scope.change = function () {
       if($scope.newTag.length > 2){
         // 3文字以上になったら検索してみる
-        // TODO タグ候補を検索
-        var url = $scope.searchUrl + $scope.frameId + '/keyword:' + $scope.newTag + '/request.json';
-//console.log(url);
+        //  タグ候補を検索
+        var url = $scope.searchUrl + $scope.frameId + '/keyword:' + $scope.newTag + '/target:' + $scope.modelName + '/' + Math.random() + '.json';
+console.log(url);
         $http.get(url).
           success(function(data, status, headers, config) {
             $scope.tagSearchResult = data;

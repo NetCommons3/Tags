@@ -27,7 +27,7 @@ class TagBehavior extends ModelBehavior {
 	public function setup(Model $Model, $settings = array()) {
 		$this->settings[$Model->alias] = $settings;
 		if ($this->_Tag === null) {
-			$this->_Tag = ClassRegistry::init('Blogs.BlogTag');
+			$this->_Tag = ClassRegistry::init('Tags.Tag');
 		}
 	}
 
