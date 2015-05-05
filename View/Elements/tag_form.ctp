@@ -1,3 +1,16 @@
+<?php
+if ($tagData) {
+	$tags = array();
+	foreach ($tagData as $tag) {
+		$tags[] = array(
+			'name' => $tag['name'],
+		);
+	}
+	$tagsJson = json_encode($tags);
+}else{
+	$tagsJson = json_encode(array());
+}
+?>
 <div class="form-group"
 	 ng-controller="Tags.TagEdit"
 	 ng-init="init(
@@ -5,7 +18,7 @@
 	 printf("%d, '%s', %s",
 		 $frameId,
 		 $modelName,
-		 h(json_encode($tagData))
+		 h($tagsJson)
 	 );
 	 ?>
 	 )">

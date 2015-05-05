@@ -100,19 +100,20 @@ class Tag extends TagsAppModel {
 	);
 
 	// OK
-	public function getTagsByEntryId($entryId) {
+	public function getTagsByContentId($modelName, $contentId) {
 		$conditions = array(
-			'BlogEntryTagLink.blog_entry_id' => $entryId,
+			'TagsContent.model' => $modelName,
+			'TagsContent.content_id' => $contentId,
 		);
 		$options = array(
 			'conditions' => $conditions,
 		);
 		$options['joins'] = array(
-			array('table' => 'blog_entry_tag_links',
-				'alias' => 'BlogEntryTagLink',
+			array('table' => 'tags_contents',
+				'alias' => 'TagsContent',
 				'type' => 'LEFT',
 				'conditions' => array(
-					'BlogTag.id = BlogEntryTagLink.blog_tag_id',
+					'Tag.id = TagsContent.tag_id',
 				)
 			)
 		);
@@ -120,9 +121,11 @@ class Tag extends TagsAppModel {
 		return $tags;
 	}
 
-	// OK
+	// NG
 	public function getTagsListByEntryId($entryId) {
-		$tags = $this->getTagsByEntryId($entryId);
+		throw new Exception('not implement');
+
+		$tags = $this->getTagsByContentId($entryId);
 		$list = array();
 		foreach ($tags as $tag) {
 			$list[] = $tag['BlogTag'];
@@ -132,7 +135,9 @@ class Tag extends TagsAppModel {
 	}
 
 	// OK
-	public function saveTags($blockId, $entryId, $tags) {
+	public function saveTags($blockId, $modelName, $contentId, $tags) {
+
+		$TagsContent = ClassRegistry::init('Tags.TagsContent');
 		if (!is_array($tags)) {
 			$tags = array();
 		}
@@ -151,8 +156,9 @@ class Tag extends TagsAppModel {
 				// $tagがないなら保存
 				$data = $this->create();
 
-				$data['BlogTag']['name'] = $tagName;
-				$data['BlogTag']['block_id'] = $blockId;
+				$data['Tag']['name'] = $tagName;
+				$data['Tag']['block_id'] = $blockId;
+				$data['Tag']['model'] = $modelName;
 				if ($this->save($data)) {
 					$savedTag = $this->findById($this->id);
 				} else {
@@ -160,11 +166,12 @@ class Tag extends TagsAppModel {
 				}
 			}
 			// save link
-			$link = $this->BlogEntryTagLink->create();
-			$link['BlogEntryTagLink']['blog_entry_id'] = $entryId;
-			$link['BlogEntryTagLink']['blog_tag_id'] = $savedTag['BlogTag']['id'];
+			$link = $TagsContent->create();
+			$link['TagsContent']['content_id'] = $contentId;
+			$link['TagsContent']['model'] = $modelName;
+			$link['TagsContent']['tag_id'] = $savedTag['Tag']['id'];
 
-			if (!$this->BlogEntryTagLink->save($link)) {
+			if (!$TagsContent->save($link)) {
 				return false;
 			}
 		}

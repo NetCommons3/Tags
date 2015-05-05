@@ -41,10 +41,11 @@ class TagBehavior extends ModelBehavior {
  */
 	public function afterSave(Model $Model, $created, $options = array()) {
 		if ($created) {
-			if (isset($Model->data['BlogTag'])) {
+
+			if (isset($Model->data['Tag'])) {
 				$blockId = $Model->data[$Model->name]['block_id'];
 
-				if (!$this->_Tag->saveTags($blockId, $Model->id, $Model->data['BlogTag'])) {
+				if (!$this->_Tag->saveTags($blockId, $Model->name, $Model->id, $Model->data['Tag'])) {
 					return false;
 				}
 			}
@@ -59,12 +60,12 @@ class TagBehavior extends ModelBehavior {
 		$conditions = $query['conditions'];
 		$columns = array_keys($conditions);
 		// タグ条件あったらタグテーブルとリンクテーブルをJOIN
-		if (preg_grep('/^BlogTag\./', $columns)) {
+		if (preg_grep('/^Tag\./', $columns)) {
 			$joinLinkTable = true;
 			$joinsTagTable = true;
 		}
 		// リンク条件だけならリンクテーブルだけをJOIN
-		if (preg_grep('/^BlogEntryTagLink\./', $columns)) {
+		if (preg_grep('/^TagsContent\./', $columns)) {
 			$joinLinkTable = true;
 		}
 
@@ -72,9 +73,11 @@ class TagBehavior extends ModelBehavior {
 			$query['joins'][] =
 				array(
 					'type' => 'LEFT',
-					'table' => 'blog_entry_tag_links',
-					'alias' => 'BlogEntryTagLink',
-					'conditions' => '`' . $Model->name . '`.`id`=`BlogEntryTagLink`.`blog_entry_id`',
+					'table' => 'tags_contents',
+					'alias' => 'TagsContent',
+					'conditions' =>
+						'`' . $Model->name . '`.`id`=`TagsContent`.`content_id`'
+						. ' AND model = ' . $Model->name,
 				);
 		}
 
@@ -82,9 +85,9 @@ class TagBehavior extends ModelBehavior {
 			$query['joins'][] =
 				array(
 					'type' => 'LEFT',
-					'table' => 'blog_tags',
-					'alias' => 'BlogTag',
-					'conditions' => '`BlogEntryTagLink`.`blog_tag_id`=`BlogTag`.`id`',
+					'table' => 'tags',
+					'alias' => 'Tag',
+					'conditions' => '`TagsContent`.`tag_id`=`Tag`.`id`',
 				);
 		}
 
@@ -102,8 +105,11 @@ class TagBehavior extends ModelBehavior {
 	public function afterFind(Model $Model, $results, $primary = false) {
 		foreach ($results as $key => $target) {
 			if (isset($target[$Model->name]['id'])) {
-				$tags = $this->_Tag->getTagsByEntryId($target[$Model->name]['id']);
-				$target['BlogTag'] = $tags;
+
+				$tags = $this->_Tag->getTagsByContentId($Model->name, $target[$Model->name]['id']);
+				foreach ($tags as $tag) {
+					$target['Tag'][] = $tag['Tag'];
+				}
 				$results[$key] = $target;
 			}
 		}

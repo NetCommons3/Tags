@@ -11,8 +11,11 @@ NetCommonsApp.controller('Tags.TagEdit',
 
 
     $scope.init = function(frameId, modelName, tags){
-      console.log(modelName);
-      $scope.tags = (tags) ? tags : [];
+      console.log(tags);
+      if(tags){
+        $scope.tags = tags;
+      }
+      console.log($scope.tags);
       $scope.modelName = modelName;
       $scope.frameId = frameId;
     }
