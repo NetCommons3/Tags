@@ -77,7 +77,7 @@ class TagBehavior extends ModelBehavior {
 					'alias' => 'TagsContent',
 					'conditions' =>
 						'`' . $Model->name . '`.`id`=`TagsContent`.`content_id`'
-						. ' AND model = ' . $Model->name,
+						. ' AND model = \'' . $Model->name . '\'',
 				);
 		}
 
@@ -115,5 +115,10 @@ class TagBehavior extends ModelBehavior {
 		}
 
 		return $results;
+	}
+
+	public function getTagByTagId($Model, $tagId) {
+		$tag = $this->_Tag->findById($tagId);
+		return $tag;
 	}
 }
