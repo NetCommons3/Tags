@@ -195,5 +195,66 @@ class Tag extends TagsAppModel {
 		}
 	}
 
+	public function cleanup(Model $Model, $blockId) {
+
+		// 下記SQLを分解再構築した is_latest or is_activeなコンテンツとつなっがてないタグidを列挙するクエリ
+		//select tags.id from tags
+		//LEFT JOIN tags_contents ON tags.id = tags_contents.tag_id
+		//LEFT JOIN blog_entries ON tags_contents.model = 'BlogEntry' AND tags_contents.`content_id` = blog_entries.id
+		//AND (blog_entries.is_latest = 1 OR blog_entries.is_active = 1)
+		//
+		//WHERE tags.model = 'BlogEntry' AND tags.block_id = 5
+		//group by tags.id
+		//having count(blog_entries.id) = 0;
+
+		$conditions = array(
+			'Tag.model' => $Model->name,
+			'Tag.block_id' => $blockId,
+		);
+		//$options = array(
+		//	'conditions' => $conditions,
+		//);
+		$options = array();
+		$options['conditions'] = $conditions;
+		$options['joins'] = array(
+			array(
+				'table' => 'tags_contents',
+				'alias' => 'TagsContent',
+				'type' => 'LEFT',
+				'conditions' => array(
+					'Tag.id = TagsContent.tag_id',
+				),
+			),
+			array(
+				'table' => $Model->useTable,
+				'alias' => $Model->name,
+				'type' => 'LEFT',
+				'conditions' => array(
+					'TagsContent.content_id = ' . $Model->name . '.id',
+					'( ' . $Model->name . '.is_latest = 1 OR ' . $Model->name . '.is_active =1 )',
+				),
+			),
+
+		);
+		$options['group'] = array(
+			//'Tag.id having',
+			sprintf('Tag.id having count(%s.id) = 0', $Model->name),
+		);
+		$options['fields'] = array(
+			'Tag.id',
+			//'Tag.content_count',
+		);
+
+		//$this->virtualFields['content_count'] = sprintf('count(%s.id)', $Model->name);
+		$tags = $this->find('all', $options);
+		//unset($this->virtualFields['content_count']);
+		$deleteTargetIds = array();
+		foreach ($tags as $tag) {
+			$deleteTargetIds[] = $tag['Tag']['id'];
+		}
+		$this->deleteAll(array('Tag.id' => $deleteTargetIds), false);
+
+	}
+
 
 }

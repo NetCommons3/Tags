@@ -41,15 +41,26 @@ class TagBehavior extends ModelBehavior {
  */
 	public function afterSave(Model $Model, $created, $options = array()) {
 		if ($created) {
+			$blockId = $Model->data[$Model->name]['block_id'];
 
 			if (isset($Model->data['Tag'])) {
-				$blockId = $Model->data[$Model->name]['block_id'];
-
 				if (!$this->_Tag->saveTags($blockId, $Model->name, $Model->id, $Model->data['Tag'])) {
 					return false;
 				}
 			}
+			// cleanup
+			$this->_cleanupTags($Model, $blockId);
 		}
+	}
+
+	protected function _cleanupTags(Model $Model,$blockId) {
+		// TODO 使われてないタグを削除
+		$this->_Tag->cleanup($Model, $blockId);
+		/*
+		 * 使われてないタグとは？
+		 * リンクテーブルTagsContentが存在しないタグ
+		 * リンクされたコンテンツがis_activeでもis_latestでもない
+		 */
 	}
 
 	public function beforeFind(Model $Model, $query) {
