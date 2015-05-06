@@ -12,9 +12,9 @@ App::uses('TagsAppController', 'Tags.Controller');
  */
 class TagsController extends TagsAppController {
 
-public $uses = array(
-	'Tags.Tag',
-);
+	public $uses = array(
+		'Tags.Tag',
+	);
 
 /**
  * use components
@@ -27,6 +27,11 @@ public $uses = array(
 		//'Security',
 	);
 
+/**
+ * タグ補完用検索
+ *
+ * @return void
+ */
 	public function search() {
 		$keyword = $this->_getNamed('keyword', '');
 		$modelName = $this->_getNamed('target', '');
@@ -47,7 +52,4 @@ public $uses = array(
 		}
 		$this->set('results', $results);
 	}
-
-
-
 }

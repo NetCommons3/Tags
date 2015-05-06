@@ -7,21 +7,13 @@ if ($tagData) {
 		);
 	}
 	$tagsJson = json_encode($tags);
-}else{
+} else {
 	$tagsJson = json_encode(array());
 }
 ?>
 <div class="form-group"
 	 ng-controller="Tags.TagEdit"
-	 ng-init="init(
-	 <?php
-	 printf("%d, '%s', %s",
-		 $frameId,
-		 $modelName,
-		 h($tagsJson)
-	 );
-	 ?>
-	 )">
+	 ng-init="init(<?php printf("%d, '%s', %s", $frameId, $modelName, h($tagsJson)) ?>)">
 
 	<label class="control-label">
 		<?php echo __d('blogs', 'tag'); ?>

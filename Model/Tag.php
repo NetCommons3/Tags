@@ -3,12 +3,11 @@
  * Tag Model
  *
  * @property Block $Block
- * @property Origin $Origin
  * @property Language $Language
  *
-* @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
-* @link     http://www.netcommons.org NetCommons Project
-* @license  http://www.netcommons.org/license.txt NetCommons License
+ * @author   Ryuji AMANO <ryuji@ryus.co.jp>
+ * @link     http://www.netcommons.org NetCommons Project
+ * @license  http://www.netcommons.org/license.txt NetCommons License
  */
 
 App::uses('TagsAppModel', 'Tags.Model');
@@ -18,8 +17,8 @@ App::uses('TagsAppModel', 'Tags.Model');
  */
 class Tag extends TagsAppModel {
 
-
 	public $recursive = -1;
+
 /**
  * Validation rules
  *
@@ -83,13 +82,6 @@ class Tag extends TagsAppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		//'Origin' => array(
-		//	'className' => 'Origin',
-		//	'foreignKey' => 'origin_id',
-		//	'conditions' => '',
-		//	'fields' => '',
-		//	'order' => ''
-		//),
 		'Language' => array(
 			'className' => 'Language',
 			'foreignKey' => 'language_id',
@@ -99,7 +91,13 @@ class Tag extends TagsAppModel {
 		)
 	);
 
-	// OK
+/**
+ * コンテンツIDと関連づくタグを返す
+ *
+ * @param string $modelName モデル名
+ * @param int $contentId コンテンツID
+ * @return array タグ
+ */
 	public function getTagsByContentId($modelName, $contentId) {
 		$conditions = array(
 			'TagsContent.model' => $modelName,
@@ -121,22 +119,16 @@ class Tag extends TagsAppModel {
 		return $tags;
 	}
 
-	// NG
-	public function getTagsListByEntryId($entryId) {
-		throw new Exception('not implement');
-
-		$tags = $this->getTagsByContentId($entryId);
-		$list = array();
-		foreach ($tags as $tag) {
-			$list[] = $tag['BlogTag'];
-		}
-		return $list;
-
-	}
-
-	// OK
+/**
+ * タグの保存
+ *
+ * @param int $blockId ブロックID
+ * @param string $modelName タグ使用モデルのモデル名
+ * @param int $contentId 保存するタグと関連づくコンテンツのID
+ * @param array $tags 保存するタグ
+ * @return bool
+ */
 	public function saveTags($blockId, $modelName, $contentId, $tags) {
-
 		$TagsContent = ClassRegistry::init('Tags.TagsContent');
 		if (!is_array($tags)) {
 			$tags = array();
@@ -178,13 +170,13 @@ class Tag extends TagsAppModel {
 		return true;
 	}
 
-	/**
-	 * origin_idがセットされてなかったらorigin_id=idとしてアップデート
-	 *
-	 * @param bool $created created
-	 * @param array $options options
-	 * @return void
-	 */
+/**
+ * origin_idがセットされてなかったらorigin_id=idとしてアップデート
+ *
+ * @param bool $created created
+ * @param array $options options
+ * @return void
+ */
 	public function afterSave($created, $options = array()) {
 		if ($created) {
 			if (empty($this->data[$this->name]['origin_id'])) {
@@ -195,8 +187,14 @@ class Tag extends TagsAppModel {
 		}
 	}
 
+/**
+ * 使われてないタグの自動削除
+ *
+ * @param Model $Model タグ使用モデル
+ * @param int $blockId ブロックID
+ * @return void
+ */
 	public function cleanup(Model $Model, $blockId) {
-
 		// 下記SQLを分解再構築した is_latest or is_activeなコンテンツとつなっがてないタグidを列挙するクエリ
 		//select tags.id from tags
 		//LEFT JOIN tags_contents ON tags.id = tags_contents.tag_id
@@ -253,8 +251,5 @@ class Tag extends TagsAppModel {
 			$deleteTargetIds[] = $tag['Tag']['id'];
 		}
 		$this->deleteAll(array('Tag.id' => $deleteTargetIds), false);
-
 	}
-
-
 }

@@ -53,18 +53,31 @@ class TagBehavior extends ModelBehavior {
 		}
 	}
 
-	protected function _cleanupTags(Model $Model,$blockId) {
-		// TODO 使われてないタグを削除
+/**
+ * タグクリーンアップ
+ *
+ * @param Model $Model タグを使ってるモデル
+ * @param int $blockId ブロックID
+ * @return void
+ */
+	protected function _cleanupTags(Model $Model, $blockId) {
+		// 使われてないタグを削除
 		$this->_Tag->cleanup($Model, $blockId);
 		/*
-		 * 使われてないタグとは？
+		 * 使われてないタグとは
 		 * リンクテーブルTagsContentが存在しないタグ
 		 * リンクされたコンテンツがis_activeでもis_latestでもない
 		 */
 	}
 
+/**
+ * 検索時にタグの検索条件があったらJOINする
+ *
+ * @param Model $Model タグ使用モデル
+ * @param array $query find条件
+ * @return array タグ検索条件を加えたfind条件
+ */
 	public function beforeFind(Model $Model, $query) {
-		// ε(　　　　 v ﾟωﾟ)　＜ 汎用化
 		$joinLinkTable = false;
 		$joinsTagTable = false;
 
@@ -87,8 +100,7 @@ class TagBehavior extends ModelBehavior {
 					'table' => 'tags_contents',
 					'alias' => 'TagsContent',
 					'conditions' =>
-						'`' . $Model->name . '`.`id`=`TagsContent`.`content_id`'
-						. ' AND model = \'' . $Model->name . '\'',
+						'`' . $Model->name . '`.`id`=`TagsContent`.`content_id` AND model = \'' . $Model->name . '\'',
 				);
 		}
 
@@ -128,6 +140,13 @@ class TagBehavior extends ModelBehavior {
 		return $results;
 	}
 
+/**
+ * タグIDを元にタグデータを返す
+ *
+ * @param Model $Model タグ使用モデル
+ * @param int $tagId タグID
+ * @return array タグ配列
+ */
 	public function getTagByTagId($Model, $tagId) {
 		$tag = $this->_Tag->findById($tagId);
 		return $tag;
