@@ -124,6 +124,7 @@ class TagBehavior extends ModelBehavior {
  * @param mixed $results Find結果
  * @param bool $primary primary
  * @return array $results
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function afterFind(Model $Model, $results, $primary = false) {
 		foreach ($results as $key => $target) {
