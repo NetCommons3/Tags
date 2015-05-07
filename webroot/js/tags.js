@@ -42,7 +42,9 @@ NetCommonsApp.controller('Tags.TagEdit',
         if ($scope.newTag.length > 2) {
           // 3文字以上になったら検索してみる
           //  タグ候補を検索
-          var url = $scope.searchUrl + $scope.frameId + '/keyword:' + $scope.newTag + '/target:' + $scope.modelName + '/' + Math.random() + '.json';
+          var url = $scope.searchUrl + $scope.frameId +
+              '/keyword:' + $scope.newTag + '/target:' + $scope.modelName +
+              '/' + Math.random() + '.json';
           console.log(url);
           $http.get(url).
               success(function(data, status, headers, config) {
