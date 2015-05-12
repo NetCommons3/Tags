@@ -1,7 +1,12 @@
 <?php
-
+/**
+ * TagsAppController
+ */
 App::uses('AppController', 'Controller');
 
+/**
+ * Class TagsAppController
+ */
 class TagsAppController extends AppController {
 
 /**

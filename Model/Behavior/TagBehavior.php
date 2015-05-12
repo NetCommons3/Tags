@@ -1,9 +1,15 @@
 <?php
 /**
+ * TagBehavior
+ *
  * Created by PhpStorm.
  * User: ryuji
  * Date: 15/04/23
  * Time: 18:53
+ */
+
+/**
+ * Class TagBehavior
  */
 class TagBehavior extends ModelBehavior {
 
@@ -13,9 +19,19 @@ class TagBehavior extends ModelBehavior {
 	public $settings;
 
 /**
- * @var Tag タグモデル
+ * @var null 削除予定の元モデルのデータ
  */
-	protected $_Tag = null;
+	protected $_deleteTargetData = null;
+
+/**
+ * タグモデルを返す
+ *
+ * @return Tag
+ */
+	protected function _getTagModel() {
+		$tag = ClassRegistry::init('Tags.Tag');
+		return $tag;
+	}
 
 /**
  * setup
@@ -26,9 +42,6 @@ class TagBehavior extends ModelBehavior {
  */
 	public function setup(Model $Model, $settings = array()) {
 		$this->settings[$Model->alias] = $settings;
-		if ($this->_Tag === null) {
-			$this->_Tag = ClassRegistry::init('Tags.Tag');
-		}
 	}
 
 /**
@@ -44,7 +57,8 @@ class TagBehavior extends ModelBehavior {
 			$blockId = $Model->data[$Model->name]['block_id'];
 
 			if (isset($Model->data['Tag'])) {
-				if (!$this->_Tag->saveTags($blockId, $Model->name, $Model->id, $Model->data['Tag'])) {
+				$Tag = $this->_getTagModel();
+				if (!$Tag->saveTags($blockId, $Model->name, $Model->id, $Model->data['Tag'])) {
 					return false;
 				}
 			}
@@ -62,7 +76,8 @@ class TagBehavior extends ModelBehavior {
  */
 	protected function _cleanupTags(Model $Model, $blockId) {
 		// 使われてないタグを削除
-		$this->_Tag->cleanup($Model, $blockId);
+		$Tag = $this->_getTagModel();
+		$Tag->cleanup($Model, $blockId);
 		/*
 		 * 使われてないタグとは
 		 * リンクテーブルTagsContentが存在しないタグ
@@ -82,6 +97,9 @@ class TagBehavior extends ModelBehavior {
 		$joinsTagTable = false;
 
 		$conditions = $query['conditions'];
+		if (is_array($conditions) === false) {
+			return $query;
+		}
 		$columns = array_keys($conditions);
 		// タグ条件あったらタグテーブルとリンクテーブルをJOIN
 		if (preg_grep('/^Tag\./', $columns)) {
@@ -129,8 +147,8 @@ class TagBehavior extends ModelBehavior {
 	public function afterFind(Model $Model, $results, $primary = false) {
 		foreach ($results as $key => $target) {
 			if (isset($target[$Model->name]['id'])) {
-
-				$tags = $this->_Tag->getTagsByContentId($Model->name, $target[$Model->name]['id']);
+				$Tag = $this->_getTagModel();
+				$tags = $Tag->getTagsByContentId($Model->name, $target[$Model->name]['id']);
 				foreach ($tags as $tag) {
 					$target['Tag'][] = $tag['Tag'];
 				}
@@ -142,6 +160,32 @@ class TagBehavior extends ModelBehavior {
 	}
 
 /**
+ * afterDeleteで使いたいので削除前に削除対象のデータを保持しておく
+ *
+ * @param Model $Model タグを使ってるモデル
+ * @param bool $cascade cascade
+ * @return bool
+ */
+	public function beforeDelete(Model $Model, $cascade = true) {
+		if ($cascade) {
+			$this->_deleteTargetData = $Model->findById($Model->id);
+		}
+		return true;
+	}
+
+/**
+ * 削除されたデータに関連するタグデータのクリーンアップ
+ *
+ * @param Model $Model タグを使ってるモデル
+ * @return void
+ */
+	public function afterDelete(Model $Model) {
+		$blockId = $this->_deleteTargetData[$Model->name]['block_id'];
+		$Tag = $this->_getTagModel();
+		$Tag->cleanup($Model, $blockId);
+	}
+
+/**
  * タグIDを元にタグデータを返す
  *
  * @param Model $Model タグ使用モデル
@@ -149,7 +193,8 @@ class TagBehavior extends ModelBehavior {
  * @return array タグ配列
  */
 	public function getTagByTagId($Model, $tagId) {
-		$tag = $this->_Tag->findById($tagId);
+		$Tag = $this->_getTagModel();
+		$tag = $Tag->findById($tagId);
 		return $tag;
 	}
 }

@@ -1,4 +1,7 @@
 <?php
+/**
+ * TagsAllTest
+ */
 
 /**
  * Tags All Test Suite

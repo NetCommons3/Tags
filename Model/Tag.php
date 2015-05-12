@@ -17,6 +17,9 @@ App::uses('TagsAppModel', 'Tags.Model');
  */
 class Tag extends TagsAppModel {
 
+/**
+ * @var int recursiveで余計なもんとってこんように -1
+ */
 	public $recursive = -1;
 
 /**
@@ -244,6 +247,7 @@ class Tag extends TagsAppModel {
 		);
 
 		//$this->virtualFields['content_count'] = sprintf('count(%s.id)', $Model->name);
+		//$options['recursive'] = -1;
 		$tags = $this->find('all', $options);
 		//unset($this->virtualFields['content_count']);
 		$deleteTargetIds = array();

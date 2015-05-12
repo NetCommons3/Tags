@@ -1,8 +1,11 @@
 <?php
+/**
+ * TagsController
+ */
 App::uses('TagsAppController', 'Tags.Controller');
 
 /**
- * BlogTags Controller
+ * Tags Controller
  *
  * @property Tag $Tag
  *
@@ -12,6 +15,9 @@ App::uses('TagsAppController', 'Tags.Controller');
  */
 class TagsController extends TagsAppController {
 
+/**
+ * @var array use Models
+ */
 	public $uses = array(
 		'Tags.Tag',
 	);
