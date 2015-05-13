@@ -165,6 +165,7 @@ class TagBehavior extends ModelBehavior {
  * @param Model $Model タグを使ってるモデル
  * @param bool $cascade cascade
  * @return bool
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function beforeDelete(Model $Model, $cascade = true) {
 		if ($cascade) {
