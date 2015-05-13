@@ -98,6 +98,7 @@ class TagBehaviorTest extends CakeTestCase {
 		$Model->Behaviors->unload('NetCommons.Trackable');
 		$Model->unbindModel(array('belongsTo' => array('TrackableCreator', 'TrackableUpdater')), false);
 	}
+
 /**
  * tearDown method
  *
