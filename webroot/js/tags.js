@@ -2,7 +2,7 @@
  * Created by ryuji on 15/04/30.
  */
 NetCommonsApp.controller('Tags.TagEdit',
-    function($scope, $filter, $http) {
+    function($scope, $filter, $http, filterFilter) {
       var where = $filter('filter');
 
       $scope.frameId = 0;
@@ -11,25 +11,30 @@ NetCommonsApp.controller('Tags.TagEdit',
 
 
       $scope.init = function(frameId, modelName, tags) {
-        console.log(tags);
         if (tags) {
           $scope.tags = tags;
         }
-        console.log($scope.tags);
         $scope.modelName = modelName;
         $scope.frameId = frameId;
       };
 
       $scope.newTag = '';
 
+
+      $scope.tagExist = function(newTag) {
+        var result = filterFilter($scope.tags, newTag);
+        return (result.length > 0);
+      };
+
       $scope.addTag = function() {
         if ($scope.newTag.length > 0) {
-          $scope.tags.push({
-            name: $scope.newTag
-          });
-          $scope.newTag = '';
-          $scope.showResult = false;
-
+          if ($scope.tagExist($scope.newTag) === false) {
+            $scope.tags.push({
+              name: $scope.newTag
+            });
+            $scope.newTag = '';
+            $scope.showResult = false;
+          }
         }
       };
 
