@@ -132,7 +132,11 @@ class Tag extends TagsAppModel {
  * @return bool
  */
 	public function saveTags($blockId, $modelName, $contentId, $tags) {
+		$this->setDataSource('master');
+
 		$TagsContent = ClassRegistry::init('Tags.TagsContent');
+		$TagsContent->setDataSource('master');
+
 		if (!is_array($tags)) {
 			$tags = array();
 		}
@@ -198,6 +202,7 @@ class Tag extends TagsAppModel {
  * @return void
  */
 	public function cleanup(Model $Model, $blockId) {
+		$this->setDataSource('master');
 		// 下記SQLを分解再構築した is_latest or is_activeなコンテンツとつなっがてないタグidを列挙するクエリ
 		//select tags.id from tags
 		//LEFT JOIN tags_contents ON tags.id = tags_contents.tag_id
