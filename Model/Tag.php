@@ -23,6 +23,15 @@ class Tag extends TagsAppModel {
 	public $recursive = -1;
 
 /**
+ * use behaviors
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'NetCommons.OriginalKey',
+	);
+
+/**
  * Validation rules
  *
  * @var array
@@ -175,23 +184,6 @@ class Tag extends TagsAppModel {
 			}
 		}
 		return true;
-	}
-
-/**
- * origin_idがセットされてなかったらorigin_id=idとしてアップデート
- *
- * @param bool $created created
- * @param array $options options
- * @return void
- */
-	public function afterSave($created, $options = array()) {
-		if ($created) {
-			if (empty($this->data[$this->name]['origin_id'])) {
-				// origin_id がセットされてなかったらkey=idでupdate
-				$this->originId = $this->data[$this->name]['id'];
-				$this->saveField('origin_id', $this->data[$this->name]['id'], array('callbacks' => false)); // ここで$this->dataがリセットされる
-			}
-		}
 	}
 
 /**
