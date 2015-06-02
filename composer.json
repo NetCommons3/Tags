@@ -37,6 +37,12 @@
     "license": "NetCommons License",
     "authors": [
         {
+          "name": "Ryuji AMANO (RYUS INC.)",
+          "email": "ryuji@ryus.co.jp",
+          "homepage": "http://ryus.co.jp/",
+          "role": "Developer"
+        },
+        {
             "name": "NetCommons Community",
             "homepage": "https://github.com/NetCommons3/Tags/graphs/contributors"
         }
