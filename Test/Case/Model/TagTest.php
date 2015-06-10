@@ -117,8 +117,49 @@ class TagTest extends TagsAppTest {
 		$this->assertTrue($resultTrue);
 	}
 
-// TODO save fail
-// TODO TagsContent save fail
+/**
+ * save失敗のテスト
+ *
+ * @return void
+ */
+	public function testSaveFail() {
+		$mock = $this->getMockForModel('Tags.Tag', ['save']);
+		$mock->expects($this->once())
+			->method('save')
+			->will($this->returnValue(false));
+		$blockId = 2;
+		$modelName = 'BlogEntry';
+		$contentId = 2;
+		$tags = array(
+			array('name' => 'タグ1'),
+			array('name' => 'タグ2'),
+			array('name' => 'タグ3'),
+		);
+		$resultFalse = $mock->saveTags($blockId, $modelName, $contentId, $tags);
+
+		$this->assertFalse($resultFalse);
+	}
+
+/**
+ * TagsContentのSaveで失敗するケースのテスト
+ */
+	public function testTagsContentSaveFail() {
+		$mock = $this->getMockForModel('Tags.TagsContent', ['save']);
+		$mock->expects($this->once())
+			->method('save')
+			->will($this->returnValue(false));
+		$blockId = 2;
+		$modelName = 'BlogEntry';
+		$contentId = 2;
+		$tags = array(
+			array('name' => 'タグ1'),
+			array('name' => 'タグ2'),
+			array('name' => 'タグ3'),
+		);
+		$resultFalse = $this->Tag->saveTags($blockId, $modelName, $contentId, $tags);
+
+		$this->assertFalse($resultFalse);
+	}
 
 /**
  * testCleanup method

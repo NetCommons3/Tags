@@ -81,27 +81,27 @@ class Tag extends TagsAppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Block' => array(
-			'className' => 'Block',
-			'foreignKey' => 'block_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Language' => array(
-			'className' => 'Language',
-			'foreignKey' => 'language_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+	///**
+	// * belongsTo associations
+	// *
+	// * @var array
+	// */
+	//	public $belongsTo = array(
+	//		'Block' => array(
+	//			'className' => 'Block',
+	//			'foreignKey' => 'block_id',
+	//			'conditions' => '',
+	//			'fields' => '',
+	//			'order' => ''
+	//		),
+	//		'Language' => array(
+	//			'className' => 'Language',
+	//			'foreignKey' => 'language_id',
+	//			'conditions' => '',
+	//			'fields' => '',
+	//			'order' => ''
+	//		)
+	//	);
 
 /**
  * コンテンツIDと関連づくタグを返す
