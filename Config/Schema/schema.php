@@ -1,13 +1,35 @@
-<?php 
-class AppSchema extends CakeSchema {
+<?php
+/**
+ * TagsSchema
+ */
 
+/**
+ * Class TagsSchema
+ */
+class TagsSchema extends CakeSchema {
+
+/**
+ * before
+ *
+ * @param array $event event
+ * @return bool
+ */
 	public function before($event = array()) {
 		return true;
 	}
 
+/**
+ * after
+ *
+ * @param array $event event
+ * @return void
+ */
 	public function after($event = array()) {
 	}
 
+/**
+ * @var array tags
+ */
 	public $tags = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary', 'comment' => 'ID |  |  | '),
 		'block_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'comment' => 'block id |  ブロックID | blocks.id | '),
@@ -25,6 +47,9 @@ class AppSchema extends CakeSchema {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
+/**
+ * @var array tags_contents
+ */
 	public $tags_contents = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'model' => array('type' => 'string', 'null' => false, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),

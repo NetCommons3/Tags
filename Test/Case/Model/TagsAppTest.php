@@ -10,6 +10,29 @@
 App::uses('Tag', 'Tags.Model');
 
 /**
+ * テスト用Fake
+ */
+class FakeModel extends CakeTestModel {
+
+/**
+ * @var array ビヘイビア
+ */
+	public $actsAs = array('Tags.Tag');
+
+/**
+ * schema property
+ *
+ * @var array
+ */
+	protected $_schema = array(
+		'id' => array('type' => 'integer', 'null' => '', 'default' => '1', 'length' => '8', 'key' => 'primary'),
+		'name' => array('type' => 'string', 'null' => '', 'default' => '', 'length' => '255'),
+		'created' => array('type' => 'date', 'null' => '1', 'default' => '', 'length' => ''),
+		'updated' => array('type' => 'datetime', 'null' => '1', 'default' => '', 'length' => null)
+	);
+}
+
+/**
  * Summary for Tag Test Case
  */
 class TagsAppTest extends CakeTestCase {
@@ -31,6 +54,5 @@ class TagsAppTest extends CakeTestCase {
  * @return void
  */
 	public function testIndex() {
-		$this->assertTrue(true);
 	}
 }

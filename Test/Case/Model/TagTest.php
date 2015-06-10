@@ -23,6 +23,7 @@ class TagTest extends TagsAppTest {
 	public $fixtures = array(
 		'plugin.tags.tag',
 		'plugin.tags.tags_content',
+		'plugin.tags.fake_model',
 		//'plugin.tags.block',
 		//'plugin.tags.user',
 		//'plugin.tags.role',
@@ -98,9 +99,9 @@ class TagTest extends TagsAppTest {
 		$tag1 = $this->Tag->findByBlockIdAndModelAndName($blockId, $modelName, 'タグ1');
 		$tag2 = $this->Tag->findByBlockIdAndModelAndName($blockId, $modelName, 'タグ2');
 		$tag3 = $this->Tag->findByBlockIdAndModelAndName($blockId, $modelName, 'タグ3');
-		$this->assertEqual($tag1['Tag']['name'],'タグ1');
-		$this->assertEqual($tag2['Tag']['name'],'タグ2');
-		$this->assertEqual($tag3['Tag']['name'],'タグ3');
+		$this->assertEqual($tag1['Tag']['name'], 'タグ1');
+		$this->assertEqual($tag2['Tag']['name'], 'タグ2');
+		$this->assertEqual($tag3['Tag']['name'], 'タグ3');
 	}
 
 /**
@@ -117,6 +118,27 @@ class TagTest extends TagsAppTest {
 		$this->assertTrue($resultTrue);
 	}
 
+/**
+ * 同じタグ名でもブロック、モデルが異なれば別レコードで保存される
+ *
+ * @return void
+ */
+	public function testSaveSameName() {
+		$blockId = 2;
+		$modelName = 'BlogEntry';
+		$contentId = 2;
+		$tags = array(
+			array('name' => 'SameNameTag'),
+		);
+		$this->Tag->saveTags($blockId, $modelName, $contentId, $tags);
+
+		$differentModel = 'DifferentModel';
+		$differentBlockId = 3;
+		$this->Tag->saveTags($differentBlockId, $differentModel, $contentId, $tags);
+
+		$tags = $this->Tag->find('all', array('conditions' => array('name' => 'SameNameTag')));
+		$this->assertEqual(count($tags), 2);
+	}
 /**
  * save失敗のテスト
  *
@@ -163,10 +185,32 @@ class TagTest extends TagsAppTest {
 
 /**
  * testCleanup method
- * TODO
+ *
  * @return void
  */
 	public function testCleanup() {
+		$blockId = 1;
+		$modelName = 'FakeModel';
+		$contentId = 1;
+		$tags = array(
+			array('name' => 'タグ1'),
+			array('name' => 'タグ2'),
+			array('name' => 'タグ3'),
+		);
+		$this->Tag->saveTags($blockId, $modelName, $contentId, $tags);
+
+		$FakeModel = ClassRegistry::init('FakeModel');
+
+		// まだ元コンテンツがあるのでcleanUpしてもタグは残る
+		$this->Tag->cleanUp($FakeModel, $blockId);
+		$tags = $this->Tag->getTagsByContentId('FakeModel', $contentId);
+		$this->assertEqual(count($tags), 3);
+		$FakeModel->delete($contentId);
+
+		// 元コンテンツが削除されたので関連するコンテンツのなくなったタグは削除される
+		$this->Tag->cleanUp($FakeModel, $blockId);
+		$tags = $this->Tag->getTagsByContentId('FakeModel', $contentId);
+		$this->assertEqual(count($tags), 0);
 	}
 
 }

@@ -159,7 +159,7 @@ class Tag extends TagsAppModel {
 		}
 		foreach ($tagNameList as $tagName) {
 			//
-			$savedTag = $this->findByBlockIdAndName($blockId, $tagName);
+			$savedTag = $this->findByBlockIdAndModelAndName($blockId, $modelName, $tagName);
 			if (!$savedTag) {
 				// $tagがないなら保存
 				$data = $this->create();
