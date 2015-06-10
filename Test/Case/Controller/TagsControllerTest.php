@@ -79,7 +79,7 @@ class TagsControllerTest extends YAControllerTestCase {
 		$frameId = 1;
 		$keyword = 'タグ';
 		$modelName = 'BlogEntry';
-		$this->testAction('/tags/tags/search/'.$frameId.'/keyword:'.$keyword.'/target:'.$modelName);
+		$this->testAction('/tags/tags/search/' . $frameId . '/keyword:' . $keyword . '/target:' . $modelName);
 
 		$this->assertInternalType('array', $this->vars['results']);
 	}
@@ -93,7 +93,7 @@ class TagsControllerTest extends YAControllerTestCase {
 		$frameId = 1;
 		$keyword = '';
 		$modelName = 'BlogEntry';
-		$this->testAction('/tags/tags/search/'.$frameId.'/keyword:'.$keyword.'/target:'.$modelName);
+		$this->testAction('/tags/tags/search/' . $frameId . '/keyword:' . $keyword . '/target:' . $modelName);
 
 		$this->assertFalse(isset($this->vars['results']));
 	}
