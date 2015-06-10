@@ -43,10 +43,10 @@ class TagFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'block_id' => 1,
-			'model' => 'Lorem ipsum dolor sit amet',
+			'model' => 'BlogEntry',
 			'origin_id' => 1,
 			'language_id' => 1,
-			'name' => 'Lorem ipsum dolor sit amet',
+			'name' => 'タグ1',
 			'created_user' => 1,
 			'created' => '2015-05-05 01:32:05',
 			'modified_user' => 1,

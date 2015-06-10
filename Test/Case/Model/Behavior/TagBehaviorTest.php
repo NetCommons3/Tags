@@ -8,6 +8,7 @@
  */
 
 App::uses('TagBehavior', 'Tags.Model/Behavior');
+App::uses('TagsAppTest', 'Tags.Test/Case/Model');
 
 /**
  * テスト用Fake
@@ -34,7 +35,7 @@ class Language extends CakeTestModel {
 /**
  * テスト用Fake
  */
-class FakeModel extends CakeTestModel {
+class FakeModel extends TagsAppTest {
 
 /**
  * @var array ビヘイビア
@@ -57,7 +58,7 @@ class FakeModel extends CakeTestModel {
 /**
  * Summary for TagBehavior Test Case
  */
-class TagBehaviorTest extends CakeTestCase {
+class TagBehaviorTest extends TagsAppTest {
 
 /**
  * fixtures property
@@ -88,16 +89,6 @@ class TagBehaviorTest extends CakeTestCase {
 		$this->Tag = new TagBehavior();
 	}
 
-/**
- * Trackableビヘイビアで必用な関連モデルが増えすぎるので除去する
- *
- * @param Model $Model Trackableを引きはがすモデル
- * @return void
- */
-	protected function _unloadTrackable(Model $Model) {
-		$Model->Behaviors->unload('NetCommons.Trackable');
-		$Model->unbindModel(array('belongsTo' => array('TrackableCreator', 'TrackableUpdater')), false);
-	}
 
 /**
  * tearDown method

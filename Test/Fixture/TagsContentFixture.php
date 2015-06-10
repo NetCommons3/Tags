@@ -40,7 +40,7 @@ class TagsContentFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => 1,
-			'model' => 'Lorem ipsum dolor sit amet',
+			'model' => 'BlogEntry',
 			'content_id' => 1,
 			'tag_id' => 1,
 			'created_user' => 1,
