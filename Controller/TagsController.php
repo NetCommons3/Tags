@@ -45,7 +45,6 @@ class TagsController extends TagsAppController {
 			return;
 		}
 		$blockId = $this->viewVars['blockId'];
-
 		$conditions = array(
 			'name LIKE' => '%' . $keyword . '%',
 			'block_id' => $blockId,
