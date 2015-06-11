@@ -79,7 +79,6 @@ class TagsControllerTest extends YAControllerTestCase {
 				]
 			]
 		);
-
 	}
 
 /**
