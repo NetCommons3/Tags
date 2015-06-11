@@ -32,6 +32,7 @@
         "netcommons/roles":             "dev-master",
         "netcommons/rooms":             "dev-master",
         "netcommons/pages":             "dev-master",
+        "netcommons/plugin-manager":    "dev-master",
         "netcommons/users":             "dev-master"
     },
     "license": "NetCommons License",
