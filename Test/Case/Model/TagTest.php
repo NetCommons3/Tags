@@ -204,13 +204,13 @@ class TagTest extends TagsAppTest {
 		// まだ元コンテンツがあるのでcleanUpしてもタグは残る
 		$this->Tag->cleanUp($FakeModel, $blockId);
 		$tags = $this->Tag->getTagsByContentId('FakeModel', $contentId);
-		$this->assertEqual(count($tags), 3);
+		$this->assertEquals(count($tags), 4);
 		$FakeModel->delete($contentId);
 
 		// 元コンテンツが削除されたので関連するコンテンツのなくなったタグは削除される
 		$this->Tag->cleanUp($FakeModel, $blockId);
 		$tags = $this->Tag->getTagsByContentId('FakeModel', $contentId);
-		$this->assertEqual(count($tags), 0);
+		$this->assertEquals(count($tags), 0);
 	}
 
 }

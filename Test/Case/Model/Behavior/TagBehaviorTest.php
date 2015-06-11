@@ -115,18 +115,33 @@ class TagBehaviorTest extends TagsAppTest {
 	}
 
 /**
- * ε(　　　　 v ﾟωﾟ)　＜ タグ条件ありのFind
+ * タグ条件ありのFind
  *
  * @return void
  */
 	public function testFindWithTag() {
+		$FakeModel = ClassRegistry::init('FakeModel');
+		$this->_unloadTrackable($FakeModel);
+
+		$conditions = array('Tag.id' => 1);
+		$result = $FakeModel->find('all', array('conditions' => $conditions));
+		$this->assertInternalType('array', $result);
+
+		$conditions = array('TagsContent.tag_id' => 1);
+		$result = $FakeModel->find('all', array('conditions' => $conditions));
+		$this->assertInternalType('array', $result);
 	}
 
 /**
- * ε(　　　　 v ﾟωﾟ)　＜ 検索結果にタグがくっついてるか
+ * 検索結果にタグがくっついてるか
  *
  * @return void
  */
 	public function testAfterFind() {
+		$FakeModel = ClassRegistry::init('FakeModel');
+		$this->_unloadTrackable($FakeModel);
+
+		$fake = $FakeModel->findById(1);
+		$this->assertEquals(count($fake['Tag']), 1);
 	}
 }
