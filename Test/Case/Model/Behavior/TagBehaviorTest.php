@@ -11,28 +11,6 @@ App::uses('TagBehavior', 'Tags.Model/Behavior');
 App::uses('TagsAppTest', 'Tags.Test/Case/Model');
 
 /**
- * テスト用Fake
- */
-class Block extends CakeTestModel {
-
-/**
- * @var bool fakeなのでテーブル使わない
- */
-	public $useTable = false;
-}
-
-/**
- * テスト用Fake
- */
-class Language extends CakeTestModel {
-
-/**
- * @var bool fakeなのでテーブル使わない
- */
-	public $useTable = false;
-}
-
-/**
  * Summary for TagBehavior Test Case
  */
 class TagBehaviorTest extends TagsAppTest {
