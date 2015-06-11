@@ -26,6 +26,12 @@
             <directory suffix=".php">app/Plugin/Comments</directory>
             <directory suffix=".php">app/Plugin/Frames</directory>
             <directory suffix=".php">app/Plugin/Pages</directory>
+            <directory suffix=".php">app/Plugin/M17n</directory>
+            <directory suffix=".php">app/Plugin/PluginManager</directory>
+            <directory suffix=".php">app/Plugin/Containers</directory>
+            <directory suffix=".php">app/Plugin/Roles</directory>
+            <directory suffix=".php">app/Plugin/install</directory>
+            <directory suffix=".php">app/Plugin/Rooms</directory>
             <directory suffix=".php">lib/Cake</directory>
             <directory suffix=".php">vendors</directory>
             <directory suffix="Test.php">app/Plugin</directory>
