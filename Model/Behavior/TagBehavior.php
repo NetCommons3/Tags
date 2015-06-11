@@ -50,6 +50,7 @@ class TagBehavior extends ModelBehavior {
  * @param Model $Model モデル
  * @param bool $created 新規作成
  * @param array $options options
+ * @throws InternalErrorException
  * @return void
  */
 	public function afterSave(Model $Model, $created, $options = array()) {
@@ -59,7 +60,7 @@ class TagBehavior extends ModelBehavior {
 			if (isset($Model->data['Tag'])) {
 				$Tag = $this->_getTagModel();
 				if (!$Tag->saveTags($blockId, $Model->name, $Model->id, $Model->data['Tag'])) {
-					return false;
+					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
 			}
 			// cleanup

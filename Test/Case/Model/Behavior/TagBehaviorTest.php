@@ -71,4 +71,62 @@ class TagBehaviorTest extends TagsAppTest {
 		$count = $FakeModel->find('count');
 		$this->assertEqual($count, 0);
 	}
+
+/**
+ * タグ取得
+ *
+ * @return void
+ */
+	public function testGetTagByTagId() {
+		$FakeModel = ClassRegistry::init('FakeModel');
+		$this->_unloadTrackable($FakeModel);
+
+		$tag = $FakeModel->getTagByTagId(1);
+		$this->assertEqual($tag['Tag']['name'], 'タグ1');
+	}
+
+/**
+ * test After save
+ *
+ * @return void
+ */
+	public function testAfterSave() {
+		$FakeModel = ClassRegistry::init('FakeModel');
+		$this->_unloadTrackable($FakeModel);
+
+		$FakeModel->create();
+		$data['FakeModel']['block_id'] = 1;
+		$data['Tag'] = array(
+			'name' => 'tag1',
+			'name' => 'tag2',
+		);
+		$result = $FakeModel->save($data);
+		$this->assertInternalType('array', $result);
+
+		//Tag save fail
+		$mock = $this->getMockForModel('Tags.Tag', ['saveTags']);
+		$mock->expects($this->once())
+			->method('saveTags')
+			->will($this->returnValue(false));
+
+		$FakeModel->create();
+		$this->setExpectedException('InternalErrorException');
+		$FakeModel->save($data);
+	}
+
+/**
+ * ε(　　　　 v ﾟωﾟ)　＜ タグ条件ありのFind
+ *
+ * @return void
+ */
+	public function testFindWithTag() {
+	}
+
+/**
+ * ε(　　　　 v ﾟωﾟ)　＜ 検索結果にタグがくっついてるか
+ *
+ * @return void
+ */
+	public function testAfterFind() {
+	}
 }
