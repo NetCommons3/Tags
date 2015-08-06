@@ -133,6 +133,24 @@ class TagBehaviorTest extends TagsAppTest {
 	}
 
 /**
+ * test beforeFind. 1コンテンツに複数タグがついていて、その複数タグが検索にヒットしても、検索結果に同じコンテンツが複数でてこないこと。
+ *
+ * @see https://github.com/NetCommons3/Tags/issues/5
+ * @return void
+ */
+	public function testFixFindResultContentsDuplicate() {
+		$FakeModel = ClassRegistry::init('FakeModel');
+		$this->_unloadTrackable($FakeModel);
+
+		$conditions = array('Tag.name LIKE ' => 'タグ%');
+		$result = $FakeModel->find('all', array('conditions' => $conditions));
+		$this->assertInternalType('array', $result);
+
+		// ヒットするタグが複数あっても、結びついてるコンテンツは1つだけなので、検索結果は1件。
+		$this->assertEquals(1, count($result));
+	}
+
+/**
  * 検索結果にタグがくっついてるか
  *
  * @return void
@@ -142,6 +160,6 @@ class TagBehaviorTest extends TagsAppTest {
 		$this->_unloadTrackable($FakeModel);
 
 		$fake = $FakeModel->findById(1);
-		$this->assertEquals(count($fake['Tag']), 1);
+		$this->assertEquals(count($fake['Tag']), 2);
 	}
 }

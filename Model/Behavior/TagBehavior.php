@@ -133,6 +133,11 @@ class TagBehavior extends ModelBehavior {
 				);
 		}
 
+		if ($joinLinkTable || $joinsTagTable) {
+			// コンテンツIDでgroup byする
+			$query['group'][] = $Model->name . '.id';
+		}
+
 		return $query;
 	}
 
