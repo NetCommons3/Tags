@@ -44,7 +44,7 @@ class TagsController extends TagsAppController {
 		if (empty($keyword) || empty($modelName)) {
 			return;
 		}
-		$blockId = $this->viewVars['blockId'];
+		$blockId = Current::read('Block.id');
 		$conditions = array(
 			'name LIKE' => '%' . $keyword . '%',
 			'block_id' => $blockId,
