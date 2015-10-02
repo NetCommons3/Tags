@@ -23,17 +23,6 @@ class TagsController extends TagsAppController {
 	);
 
 /**
- * use components
- *
- * @var array
- */
-	public $components = array(
-		//'NetCommons.NetCommonsBlock',
-		'NetCommons.NetCommonsFrame',
-		//'Security',
-	);
-
-/**
  * タグ補完用検索
  *
  * @return void
