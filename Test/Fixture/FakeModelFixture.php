@@ -19,7 +19,7 @@ class FakeModelFixture extends CakeTestFixture {
  */
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary', 'comment' => 'ID |  |  | '),
-		'origin_id' => array('type' => 'integer'),
+		'key' => array('type' => 'string'),
 		'block_id' => array('type' => 'integer'),
 		'is_active' => array('type' => 'integer'),
 		'is_latest' => array('type' => 'integer'),
@@ -35,7 +35,7 @@ class FakeModelFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => 1,
-			'origin_id' => 1,
+			'key' => '1',
 			'block_id' => 1,
 			'is_active' => 1,
 			'is_latest' => 0,
@@ -43,7 +43,7 @@ class FakeModelFixture extends CakeTestFixture {
 		),
 		array(
 			'id' => 2,
-			'origin_id' => 1,
+			'key' => '1',
 			'block_id' => 1,
 			'is_active' => 0,
 			'is_latest' => 1,
