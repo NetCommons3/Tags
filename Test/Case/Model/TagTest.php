@@ -61,7 +61,7 @@ class TagTest extends TagsAppTest {
  */
 	public function tearDown() {
 		unset($this->Tag);
-
+		unset($this->TagsContent);
 		parent::tearDown();
 	}
 

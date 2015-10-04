@@ -67,7 +67,7 @@ class TagBehaviorTest extends TagsAppTest {
 		//$FakeModel->delete(1);
 		$count = $FakeModel->find('count');
 		$this->assertEqual($count, 2);
-		$FakeModel->deleteAll(array('origin_id' => 1), true, true);
+		$FakeModel->deleteAll(array('key' => 1), true, true);
 		$count = $FakeModel->find('count');
 		$this->assertEqual($count, 0);
 	}
