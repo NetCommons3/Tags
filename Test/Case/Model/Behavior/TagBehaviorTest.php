@@ -162,4 +162,18 @@ class TagBehaviorTest extends TagsAppTest {
 		$fake = $FakeModel->findById(1);
 		$this->assertEquals(count($fake['Tag']), 2);
 	}
+
+/**
+ * モデルの別名使用テスト
+ *
+ * @return void
+ */
+	public function testGetTagUsedAlias() {
+		$FakeModel = ClassRegistry::init(array('class' => 'FakeModel', 'alias' => 'FakeModelAlias'));
+		$this->_unloadTrackable($FakeModel);
+
+		$conditions = array('Tag.id' => 1);
+		$result = $FakeModel->find('all', array('conditions' => $conditions));
+		$this->assertInternalType('array', $result);
+	}
 }

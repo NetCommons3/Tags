@@ -55,11 +55,11 @@ class TagBehavior extends ModelBehavior {
  */
 	public function afterSave(Model $Model, $created, $options = array()) {
 		if ($created) {
-			$blockId = $Model->data[$Model->name]['block_id'];
+			$blockId = $Model->data[$Model->alias]['block_id'];
 
 			if (isset($Model->data['Tag'])) {
 				$Tag = $this->_getTagModel();
-				if (!$Tag->saveTags($blockId, $Model->name, $Model->id, $Model->data['Tag'])) {
+				if (!$Tag->saveTags($blockId, $Model->alias, $Model->id, $Model->data['Tag'])) {
 					throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 				}
 			}
@@ -119,7 +119,7 @@ class TagBehavior extends ModelBehavior {
 					'table' => 'tags_contents',
 					'alias' => 'TagsContent',
 					'conditions' =>
-						'`' . $Model->name . '`.`id`=`TagsContent`.`content_id` AND model = \'' . $Model->name . '\'',
+						'`' . $Model->alias . '`.`id`=`TagsContent`.`content_id` AND model = \'' . $Model->alias . '\'',
 				);
 		}
 
@@ -135,7 +135,7 @@ class TagBehavior extends ModelBehavior {
 
 		if ($joinLinkTable || $joinsTagTable) {
 			// コンテンツIDでgroup byする
-			$query['group'][] = $Model->name . '.id';
+			$query['group'][] = $Model->alias . '.id';
 		}
 
 		return $query;
@@ -152,9 +152,9 @@ class TagBehavior extends ModelBehavior {
  */
 	public function afterFind(Model $Model, $results, $primary = false) {
 		foreach ($results as $key => $target) {
-			if (isset($target[$Model->name]['id'])) {
+			if (isset($target[$Model->alias]['id'])) {
 				$Tag = $this->_getTagModel();
-				$tags = $Tag->getTagsByContentId($Model->name, $target[$Model->name]['id']);
+				$tags = $Tag->getTagsByContentId($Model->alias, $target[$Model->alias]['id']);
 				foreach ($tags as $tag) {
 					$target['Tag'][] = $tag['Tag'];
 				}
@@ -187,7 +187,7 @@ class TagBehavior extends ModelBehavior {
  * @return void
  */
 	public function afterDelete(Model $Model) {
-		$blockId = $this->_deleteTargetData[$Model->name]['block_id'];
+		$blockId = $this->_deleteTargetData[$Model->alias]['block_id'];
 		$Tag = $this->_getTagModel();
 		$Tag->cleanup($Model, $blockId);
 	}
