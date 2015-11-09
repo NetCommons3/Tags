@@ -1,4 +1,11 @@
 <?php
+/**
+ * originIdToKey
+ */
+
+/**
+ * Class OriginIdToKey
+ */
 class OriginIdToKey extends CakeMigration {
 
 /**

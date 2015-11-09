@@ -131,7 +131,6 @@ class Tag extends TagsAppModel {
  * @return bool
  */
 	public function saveTags($blockId, $modelName, $contentId, $tags) {
-
 		$TagsContent = ClassRegistry::init('Tags.TagsContent');
 
 		if (!is_array($tags)) {

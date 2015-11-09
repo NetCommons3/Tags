@@ -1,4 +1,11 @@
 <?php
+/**
+ * FixOriginId
+ */
+
+/**
+ * Class FixOriginId
+ */
 class FixOriginId extends CakeMigration {
 
 /**

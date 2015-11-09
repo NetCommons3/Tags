@@ -164,6 +164,8 @@ class TagTest extends TagsAppTest {
 
 /**
  * TagsContentのSaveで失敗するケースのテスト
+ *
+ * @return void
  */
 	public function testTagsContentSaveFail() {
 		$mock = $this->getMockForModel('Tags.TagsContent', ['save']);
