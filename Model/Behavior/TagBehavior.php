@@ -112,11 +112,14 @@ class TagBehavior extends ModelBehavior {
 			$joinLinkTable = true;
 		}
 
+		$TagsContent = ClassRegistry::init('Tags.TagsContent');
+		$Tag = ClassRegistry::init('Tags.Tag');
+
 		if ($joinLinkTable) {
 			$query['joins'][] =
 				array(
 					'type' => 'LEFT',
-					'table' => 'tags_contents',
+					'table' => $TagsContent->tablePrefix . 'tags_contents',
 					'alias' => 'TagsContent',
 					'conditions' =>
 						'`' . $Model->alias . '`.`id`=`TagsContent`.`content_id` AND model = \'' . $Model->alias . '\'',
@@ -127,7 +130,7 @@ class TagBehavior extends ModelBehavior {
 			$query['joins'][] =
 				array(
 					'type' => 'LEFT',
-					'table' => 'tags',
+					'table' => $Tag->tablePrefix . 'tags',
 					'alias' => 'Tag',
 					'conditions' => '`TagsContent`.`tag_id`=`Tag`.`id`',
 				);
