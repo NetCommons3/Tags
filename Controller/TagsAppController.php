@@ -17,7 +17,8 @@ class TagsAppController extends AppController {
  * @return int|string
  */
 	protected function _getNamed($name, $default = null) {
-		$value = isset($this->request->params['named'][$name]) ? $this->request->params['named'][$name] : $default;
+		//$value = isset($this->request->params['named'][$name]) ? $this->request->params['named'][$name] : $default;
+		$value = Hash::get($this->request->params, 'named.' . $name, $default);
 		return $value;
 	}
 

@@ -122,7 +122,8 @@ class TagBehavior extends ModelBehavior {
 					'table' => $TagsContent->tablePrefix . 'tags_contents',
 					'alias' => 'TagsContent',
 					'conditions' =>
-						'`' . $Model->alias . '`.`id`=`TagsContent`.`content_id` AND model = \'' . $Model->alias . '\'',
+						'`' . $Model->alias . '`.`id`=`TagsContent`.`content_id`' .
+						' AND model = \'' . $Model->alias . '\'',
 				);
 		}
 
