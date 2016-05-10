@@ -100,6 +100,18 @@ class TagFixture extends CakeTestFixture {
 			'modified_user' => 1,
 			'modified' => '2015-05-05 01:32:05'
 		),
+		array(
+			'id' => 6,
+			'block_id' => 2,
+			'model' => 'Video',
+			'key' => '6',
+			'language_id' => 2,
+			'name' => 'タグ6',
+			'created_user' => 1,
+			'created' => '2015-05-05 01:32:05',
+			'modified_user' => 1,
+			'modified' => '2015-05-05 01:32:05'
+		),
 	);
 
 }
