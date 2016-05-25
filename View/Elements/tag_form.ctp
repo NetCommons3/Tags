@@ -11,18 +11,18 @@ if ($tagData) {
 	$tagsJson = json_encode(array());
 }
 ?>
-<div class="form-group"
+<div class="form-group form-inline"
 	 ng-controller="Tags.TagEdit"
 	 ng-init="init(<?php printf("%d, '%s', %s", Current::read('Frame.id'), $modelName, h($tagsJson)) ?>)">
 
 	<label class="control-label">
-		<?php echo __d('blogs', 'tag'); ?>
+		<?php echo __d('tags', 'tag'); ?>
 	</label>
 
 	<div>
-		<input type="text" ng-model="newTag" ng-change="change()"/>
-		<button type="button" class="btn btn-success btn-xs" ng-click="addTag()">
-			<span class=""><?php echo __d('blogs', 'Add tag') ?></span>
+		<input type="text" ng-model="newTag" ng-change="change()" class="form-control"/>
+		<button type="button" class="btn btn-success btn-s" ng-click="addTag()">
+			<span class=""><?php echo __d('tags', 'Add tag') ?></span>
 		</button>
 	</div>
 
