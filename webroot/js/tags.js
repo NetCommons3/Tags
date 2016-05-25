@@ -6,17 +6,17 @@ NetCommonsApp.controller('Tags.TagEdit',
       function($scope, $filter, $http, filterFilter) {
         var where = $filter('filter');
 
-        $scope.frameId = 0;
+        $scope.blockId = 0;
         $scope.modelName = '';
         $scope.tags = [];
 
 
-        $scope.init = function(frameId, modelName, tags) {
+        $scope.init = function(blockId, modelName, tags) {
           if (tags) {
             $scope.tags = tags;
           }
           $scope.modelName = modelName;
-          $scope.frameId = frameId;
+          $scope.blockId = blockId;
         };
 
         $scope.newTag = '';
@@ -48,12 +48,12 @@ NetCommonsApp.controller('Tags.TagEdit',
           if ($scope.newTag.length > 2) {
             // 3文字以上になったら検索してみる
             //  タグ候補を検索
-            var url = $scope.searchUrl + $scope.frameId +
+            var url = $scope.searchUrl + $scope.blockId +
                 '/keyword:' + $scope.newTag + '/target:' + $scope.modelName +
                 '/' + Math.random() + '.json';
-            console.log(url);
+            // console.log(url);
             $http.get(url).success(function(data, status, headers, config) {
-              $scope.tagSearchResult = data;
+              $scope.tagSearchResult = data.results;
               if ($scope.tagSearchResult.length > 0) {
                 $scope.showResult = true;
               } else {
@@ -61,12 +61,8 @@ NetCommonsApp.controller('Tags.TagEdit',
               }
 
             }).error(function(data, status, headers, config) {
-              console.log(data);
+              // console.log(data);
             });
-            //$scope.tagSearchResult = ["結果1", "結果2", "結果3"];
-            //
-            //$scope.showResultStyle = {display:"block"}
-
           }
         };
 
