@@ -13,7 +13,7 @@ if ($tagData) {
 ?>
 <div class="form-group form-inline"
 	 ng-controller="Tags.TagEdit"
-	 ng-init="init(<?php printf("%d, '%s', %s", Current::read('Frame.id'), $modelName, h($tagsJson)) ?>)">
+	 ng-init="init(<?php printf("%d, '%s', %s", Current::read('Block.id'), $modelName, h($tagsJson)) ?>)">
 
 	<label class="control-label">
 		<?php echo __d('tags', 'tag'); ?>

@@ -44,6 +44,8 @@ class TagsController extends TagsAppController {
 		foreach ($tags as $tag) {
 			$results[] = $tag['Tag']['name'];
 		}
+		CakeLog::debug(serialize($results));
 		$this->set('results', $results);
+		$this->set('_serialize', ['results']);
 	}
 }
