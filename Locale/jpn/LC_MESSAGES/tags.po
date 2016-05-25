@@ -1,0 +1,5 @@
+msgid "tag"
+msgstr "タグ"
+
+msgid "Add tag"
+msgstr "タグ追加"
