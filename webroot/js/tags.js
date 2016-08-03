@@ -2,8 +2,8 @@
  * Created by ryuji on 15/04/30.
  */
 NetCommonsApp.controller('Tags.TagEdit',
-    ['$scope', '$filter', '$http', 'filterFilter',
-      function($scope, $filter, $http, filterFilter) {
+    ['$scope', '$filter', '$http', 'filterFilter', 'NC3_URL',
+      function($scope, $filter, $http, filterFilter, NC3_URL) {
         var where = $filter('filter');
 
         $scope.blockId = 0;
@@ -42,7 +42,7 @@ NetCommonsApp.controller('Tags.TagEdit',
         $scope.showResult = false;
         $scope.showResultStyle = {};
         $scope.tagSearchResult = [];
-        $scope.searchUrl = '/tags/tags/search/';
+        $scope.searchUrl = NC3_URL + '/tags/tags/search/';
         // タグ補完
         $scope.change = function() {
           if ($scope.newTag.length > 2) {
