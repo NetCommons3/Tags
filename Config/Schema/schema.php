@@ -14,7 +14,7 @@ class TagsSchema extends CakeSchema {
  * @var string
  */
 	public $connection = 'master';
-	
+
 /**
  * before
  *
