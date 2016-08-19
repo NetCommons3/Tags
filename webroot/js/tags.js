@@ -19,7 +19,7 @@ NetCommonsApp.controller('Tags.TagEdit',
           $scope.blockId = blockId;
         };
 
-        $scope.newTag = '';
+        $scope.newTag = ['', ''];
 
 
         $scope.tagExist = function(newTag) {
@@ -28,36 +28,38 @@ NetCommonsApp.controller('Tags.TagEdit',
         };
 
         $scope.addTag = function() {
-          if ($scope.newTag.length > 0) {
-            if ($scope.tagExist($scope.newTag) === false) {
-              $scope.tags.push({
-                name: $scope.newTag
-              });
-              $scope.newTag = '';
-              $scope.showResult = false;
+          angular.forEach($scope.newTag, function(newTag, index) {
+            if (newTag.length > 0) {
+              if ($scope.tagExist(newTag) === false) {
+                $scope.tags.push({
+                  name: newTag
+                });
+              }
             }
-          }
+            $scope.newTag[index] = '';
+            $scope.showResult = [false, false];
+
+          })
         };
 
-        $scope.showResult = false;
+        $scope.showResult = [false, false];
         $scope.showResultStyle = {};
         $scope.tagSearchResult = [];
         $scope.searchUrl = NC3_URL + '/tags/tags/search/';
         // タグ補完
-        $scope.change = function() {
-          if ($scope.newTag.length > 2) {
+        $scope.change = function(index) {
+          if ($scope.newTag[index].length > 2) {
             // 3文字以上になったら検索してみる
             //  タグ候補を検索
             var url = $scope.searchUrl + $scope.blockId +
-                '/keyword:' + $scope.newTag + '/target:' + $scope.modelName +
+                '/keyword:' + $scope.newTag[index] + '/target:' + $scope.modelName +
                 '/' + Math.random() + '.json';
-            // console.log(url);
             $http.get(url).success(function(data, status, headers, config) {
-              $scope.tagSearchResult = data.results;
-              if ($scope.tagSearchResult.length > 0) {
-                $scope.showResult = true;
+              $scope.tagSearchResult[index] = data.results;
+              if ($scope.tagSearchResult[index].length > 0) {
+                $scope.showResult[index] = true;
               } else {
-                $scope.showResult = false;
+                $scope.showResult[index] = false;
               }
 
             }).error(function(data, status, headers, config) {
@@ -67,11 +69,11 @@ NetCommonsApp.controller('Tags.TagEdit',
         };
 
 
-        $scope.selectTag = function(selectedTag) {
-          $scope.newTag = selectedTag;
+        $scope.selectTag = function(selectedTag, index) {
+          $scope.newTag[index] = selectedTag;
           //$scope.showResultStyle = {display:"none"}
           //$scope.showResult = false;
-          $scope.showResult = false;
+          $scope.showResult[index] = false;
         };
 
         // 任意の tag を削除
