@@ -39,7 +39,7 @@ NetCommonsApp.controller('Tags.TagEdit',
             $scope.newTag[index] = '';
             $scope.showResult = [false, false];
 
-          })
+          });
         };
 
         $scope.showResult = [false, false];
