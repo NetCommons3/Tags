@@ -155,17 +155,20 @@ class TagBehavior extends ModelBehavior {
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function afterFind(Model $Model, $results, $primary = false) {
-		foreach ($results as $key => $target) {
-			if (isset($target[$Model->alias]['id'])) {
-				$Tag = $this->_getTagModel();
-				$tags = $Tag->getTagsByContentId($Model->alias, $target[$Model->alias]['id']);
-				foreach ($tags as $tag) {
-					$target['Tag'][] = $tag['Tag'];
-				}
-				$results[$key] = $target;
-			}
-		}
+		if ($Model->recursive >= 0) {
 
+			foreach ($results as $key => $target) {
+				if (isset($target[$Model->alias]['id'])) {
+					$Tag = $this->_getTagModel();
+					$tags = $Tag->getTagsByContentId($Model->alias, $target[$Model->alias]['id']);
+					foreach ($tags as $tag) {
+						$target['Tag'][] = $tag['Tag'];
+					}
+					$results[$key] = $target;
+				}
+			}
+
+		}
 		return $results;
 	}
 
