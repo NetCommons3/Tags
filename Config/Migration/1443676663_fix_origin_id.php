@@ -36,8 +36,8 @@ class FixOriginId extends CakeMigration {
 				'tags_contents' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary'),
 					'model' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-					'content_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 45, 'unsigned' => false),
-					'tag_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 45, 'unsigned' => false),
+					'content_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 11, 'unsigned' => false),
+					'tag_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 11, 'unsigned' => false),
 					'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false, 'comment' => 'created user | 作成者 | users.id | '),
 					'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false, 'comment' => 'modified user | 更新者 | users.id | '),
 				),
@@ -58,8 +58,8 @@ class FixOriginId extends CakeMigration {
 				'tags_contents' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 					'model' => array('type' => 'string', 'null' => false, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-					'content_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 45),
-					'tag_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 45),
+					'content_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 11),
+					'tag_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 11),
 					'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'comment' => 'created user | 作成者 | users.id | '),
 					'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'comment' => 'modified user | 更新者 | users.id | '),
 				),
