@@ -23,7 +23,7 @@ NetCommonsApp.controller('Tags.TagEdit',
 
 
         $scope.tagExist = function(newTag) {
-          var result = filterFilter($scope.tags, newTag);
+          var result = filterFilter($scope.tags, newTag, true);
           return (result.length > 0);
         };
 
@@ -110,6 +110,12 @@ NetCommonsApp.controller('Tags.TagEdit',
           $scope.tags = where($scope.tags, function(tag) {
             return currentTag !== tag;
           });
+        };
+
+        $scope.handleEnterKeydown = function(e) {
+          if (e.which == 13) { // enterキー
+            $scope.addTag();
+          }
         };
       }
     ]
