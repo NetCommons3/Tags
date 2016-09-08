@@ -25,7 +25,7 @@ if ($tagData) {
 	</label>
 
 	<div class="form-inline">
-		<input type="text" ng-model="newTag[0]" ng-change="change(0)" class="form-control" />
+		<input type="text" ng-model="newTag[0]" ng-change="change(0)" ng-keydown="handleEnterKeydown($event)" class="form-control" />
 		<button type="button" class="btn btn-success btn-s" ng-click="addTag()">
 			<span class=""><?php echo __d('tags', 'Add tag') ?></span>
 		</button>
