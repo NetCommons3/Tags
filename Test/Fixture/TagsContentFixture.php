@@ -22,10 +22,10 @@ class TagsContentFixture extends CakeTestFixture {
 		'model' => array('type' => 'string', 'null' => false, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'content_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 45),
 		'tag_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 45),
-		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'comment' => 'created user | 作成者 | users.id | '),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'created datetime | 作成日時 |  | '),
-		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'comment' => 'modified user | 更新者 | users.id | '),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'modified datetime | 更新日時 |  | '),
+		'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'comment' => '作成者'),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => '作成日時'),
+		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'comment' => '更新者'),
+		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => '更新日時'),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
 		),

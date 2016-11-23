@@ -18,7 +18,7 @@ class FakeModelFixture extends CakeTestFixture {
  * @var array
  */
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary', 'comment' => 'ID |  |  | '),
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary', 'comment' => 'ID'),
 		'key' => array('type' => 'string'),
 		'block_id' => array('type' => 'integer'),
 		'is_active' => array('type' => 'integer'),
