@@ -5,4 +5,4 @@ msgid "Add tag"
 msgstr "タグ追加"
 
 msgid "Tag, please be entered in single-byte comma-separated."
-msgstr "タグは半角カンマ(\",\")区切りで入力してください。"
+msgstr "タグは半角カンマ(,)区切りで入力してください。"
