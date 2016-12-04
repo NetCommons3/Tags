@@ -1,0 +1,35 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Blogs/Controller/BlogEntriesController.php:150
+msgid "Tag not found"
+msgstr ""
+
+#: Mails/Utility/NetCommonsExtentionTag.php:125
+#: Tags/View/Elements/tag_form.ctp:24
+#: Videos/Controller/VideosController.php:179
+#: Videos/Test/Case/Controller/VideosController/TagTest.php:113;148;183
+#: Videos/View/Videos/view.ctp:137
+msgid "tag"
+msgstr ""
+
+#: Tags/View/Elements/tag_form.ctp:30
+msgid "Add tag"
+msgstr ""
+
+#: Tags/View/Elements/tag_form.ctp:44
+msgid "Tag, please be entered in single-byte comma-separated."
+msgstr ""
+
