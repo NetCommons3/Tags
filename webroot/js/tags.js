@@ -75,7 +75,8 @@ NetCommonsApp.controller('Tags.TagEdit',
             var url = $scope.searchUrl + $scope.blockId +
                 '/keyword:' + inputTag + '/target:' + $scope.modelName +
                 '/' + Math.random() + '.json';
-            $http.get(url).success(function(data, status, headers, config) {
+            $http.get(url).then(function(response) {
+              var data = response.data;
               $scope.tagSearchResult[index] = data.results;
               if ($scope.tagSearchResult[index].length > 0) {
                 $scope.showResult[index] = true;
@@ -83,7 +84,8 @@ NetCommonsApp.controller('Tags.TagEdit',
                 $scope.showResult[index] = false;
               }
 
-            }).error(function(data, status, headers, config) {
+            }, function(response) {
+              //var data = response.data;
               // console.log(data);
             });
           }
