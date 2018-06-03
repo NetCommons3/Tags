@@ -106,6 +106,21 @@ class Tag extends TagsAppModel {
 			'TagsContent.content_id' => $contentId,
 		);
 		$options = array(
+			'fields' => [
+				'Tag.id',
+				'Tag.block_id',
+				'Tag.model',
+				'Tag.key',
+				'Tag.language_id',
+				'Tag.is_origin',
+				'Tag.is_translation',
+				'Tag.is_original_copy',
+				'Tag.name',
+				'TagsContent.id',
+				'TagsContent.model',
+				'TagsContent.content_id',
+				'TagsContent.tag_id',
+			],
 			'conditions' => $conditions,
 		);
 		$options['joins'] = array(

@@ -208,7 +208,23 @@ class TagBehavior extends ModelBehavior {
  */
 	public function getTagByTagId($Model, $tagId) {
 		$Tag = $this->_getTagModel();
-		$tag = $Tag->findById($tagId);
+		$tag = $Tag->find('first', [
+			'recursive' => -1,
+			'fields' => [
+				'Tag.id',
+				'Tag.block_id',
+				'Tag.model',
+				'Tag.key',
+				'Tag.language_id',
+				'Tag.is_origin',
+				'Tag.is_translation',
+				'Tag.is_original_copy',
+				'Tag.name',
+			],
+			'conditions' => [
+				'id' => $tagId
+			]
+		]);
 		return $tag;
 	}
 }
