@@ -194,9 +194,11 @@ class TagBehavior extends ModelBehavior {
  * @return void
  */
 	public function afterDelete(Model $Model) {
-		$blockId = $this->_deleteTargetData[$Model->alias]['block_id'];
-		$Tag = $this->_getTagModel();
-		$Tag->cleanup($Model, $blockId);
+		if (! empty($this->_deleteTargetData[$Model->alias]['block_id'])) {
+			$blockId = $this->_deleteTargetData[$Model->alias]['block_id'];
+			$Tag = $this->_getTagModel();
+			$Tag->cleanup($Model, $blockId);
+		}
 	}
 
 /**
