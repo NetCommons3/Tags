@@ -159,6 +159,11 @@ class Tag extends TagsAppModel {
 				$tagNameList[] = $tag['name'];
 			}
 		}
+
+		// trimして空のタグを除去
+		$tagNameList = array_map('trim', $tagNameList);
+		$tagNameList = array_filter($tagNameList);
+
 		foreach ($tagNameList as $tagName) {
 			//
 			$savedTag = $this->findByBlockIdAndModelAndName($blockId, $modelName, $tagName);
