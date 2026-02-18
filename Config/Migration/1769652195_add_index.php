@@ -1,8 +1,12 @@
 <?php
 /**
+ * AddIndex
+ */
+
+/**
  * インデックス追加のみ。
  *
- * @package Researchmap\RmNetCommons\Config\Migration
+ * @package NetCommons\Tags\Config\Migration
  */
 class AddIndex1769652195 extends CakeMigration {
 
